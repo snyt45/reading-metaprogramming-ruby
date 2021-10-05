@@ -82,8 +82,9 @@ class C4
   end
 
   def increment
-    @value += 1
-    @value.to_s
+    # privateメソッドでもセッターの場合はselfのようにレシーバを指定することができる。
+    self.value = value + 1
+    value.to_s
   end
 
   private
@@ -126,10 +127,16 @@ end
 # - C6.new.name が 'Refined M1' を返すように C6 に name メソッドを実装する
 class C6
   include M1
+  # M1モジュールのnameメソッドを書き換えている。
   using M1Refinements
 
   # nameメソッドを定義して、M1のnameメソッドを呼びたいがどうすればよいかわからない…
   # def name
   #   name
   # end
+
+  # ここにnameメソッドを定義してもM1のnameメソッドではないので、superで呼ぶ必要がある。
+  def name
+    super
+  end
 end

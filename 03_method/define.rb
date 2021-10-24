@@ -77,7 +77,7 @@ end
 # - OriginalAccessorモジュールはincludeされたときのみ、my_attr_accessorメソッドを定義すること
 # - my_attr_accessorはgetter/setterに加えて、boolean値を代入した際のみ真偽値判定を行うaccessorと同名の?メソッドができること
 
-# 3章で出てきた方法ではない？？
+# 3章で出てきた方法ではない？？ => P135(5章)、P167(6章)に書いてあった。
 # moduleのクラスメソッドをインクルードする方法分からず下記を参照した。
 # https://takayukinakata.hatenablog.com/entry/2017/03/04/183546
 module OriginalAccessor

@@ -113,3 +113,38 @@ module OriginalAccessor
     end
   end
 end
+
+
+###
+# モジュールをインクルードしてクラスメソッドを定義する方法について検証
+###
+
+# 1) モジュールにdef self.xxxでクラスメソッドを定義しインクルード => NG
+
+# module OriginalAccessor
+#   def self.my_attr_accessor
+#     "my_attraccesor"
+#   end
+# end
+
+# class Test
+#   include OriginalAccessor
+# end
+
+# irb(main):010:0> Test.methods.grep(/my_attr_accessor/)
+# => []
+
+# 2) モジュールにdefine_singleton_methodでクラスメソッドを定義しインクルード => NG
+
+# module OriginalAccessor
+#   define_singleton_method :my_attr_accessor do
+#     "my_attraccesor"
+#   end
+# end
+
+# class Test
+#   include OriginalAccessor
+# end
+
+# irb(main):010:0> Test.methods.grep(/my_attr_accessor/)
+# => []

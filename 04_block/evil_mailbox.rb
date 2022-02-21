@@ -23,10 +23,10 @@ class EvilMailbox
     @mailer = mailer
     auth(secret_string) if secret_string
 
-    define_singleton_method :send_mail do |to, body, &block|
+    define_singleton_method :send_mail do |to, body|
       body = "#{body}#{secret_string}" if secret_string
       is_send = @mailer.send_mail(to, body)
-      block.call(is_send) if block
+      yield(is_send) if block_given?
       nil
     end
   end

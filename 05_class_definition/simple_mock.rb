@@ -37,3 +37,44 @@
 # obj.imitated_method #=> true
 # obj.called_times(:imitated_method) #=> 2
 # ```
+
+module SimpleMock
+  class << self
+    def new
+      mock(Object.new)
+    end
+
+    def mock(obj)
+      obj.extend SimpleMock
+    end
+  end
+
+  def expects(name, value)
+    define_singleton_method name do
+      # watchされている場合のみカウントする
+      if @counter && @counter&.keys.include?(name)
+        @counter[name] += 1
+      end
+      value
+    end
+  end
+
+  def watch(name)
+    # 初期値がなければセット
+    @counter ||= {}
+    @counter[name] = 0
+    # expectsが呼ばれない場合は、watchメソッド側でカウントできるよう定義
+    unless singleton_methods.include?(name)
+      define_singleton_method name do
+        # watchされている場合のみカウントする
+        if @counter && @counter&.keys.include?(name)
+          @counter[name] += 1
+        end
+      end
+    end
+  end
+
+  def called_times(name)
+    @counter[name]
+  end
+end
